@@ -1,0 +1,16 @@
+default: &default
+  adapter: postgresql
+  encoding: unicode
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+  host: <%= ENV.fetch('DB_HOST') { "localhost" } %>
+  username: <%= ENV.fetch('DB_USER') { "dev" } %>
+  password: <%= ENV.fetch('DB_PASSWORD') { "adminadmin" } %>
+  port: <%= ENV.fetch('DB_PORT', 5432) %>
+  schema_search_path: public
+
+development:
+  <<: *default
+  database: grimoire_development
+  host: localhost
+  username: dev
+  password: adminadmin
