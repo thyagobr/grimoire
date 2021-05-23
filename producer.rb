@@ -1,12 +1,3 @@
-require "bundler/inline"
-
-gemfile do
-  source "https://rubygems.org"
-  gem "ruby-kafka"
-  gem "json"
-  gem "byebug"
-end
-
 class Producer
   KAKFA_URLS = ["localhost:9092"]
 
@@ -37,7 +28,14 @@ class Producer
   end
 
   def produce
-    @producer.produce({ message: 'what up' }.to_json, topic: "question_answered")
+    event = {
+      respondent_id: 1,
+      question_id: 1,
+      event: {
+        option_ids: [1]
+      }
+    }
+    @producer.produce(event.to_json, topic: "question_answered")
     @producer.deliver_messages
     shutdown!
   end

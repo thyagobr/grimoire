@@ -28,6 +28,39 @@ SET default_tablespace = '';
 SET default_table_access_method = heap;
 
 --
+-- Name: answered_options; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.answered_options (
+    id bigint NOT NULL,
+    uuid character varying NOT NULL,
+    answer_id integer NOT NULL,
+    option_id integer NOT NULL,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: answered_options_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.answered_options_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: answered_options_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.answered_options_id_seq OWNED BY public.answered_options.id;
+
+
+--
 -- Name: answers; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -79,8 +112,7 @@ CREATE TABLE public.ar_internal_metadata (
 CREATE TABLE public.options (
     id bigint NOT NULL,
     uuid character varying NOT NULL,
-    answer_id integer NOT NULL,
-    respondent_id integer NOT NULL,
+    question_id integer NOT NULL,
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL
 );
@@ -177,6 +209,13 @@ CREATE TABLE public.schema_migrations (
 
 
 --
+-- Name: answered_options id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.answered_options ALTER COLUMN id SET DEFAULT nextval('public.answered_options_id_seq'::regclass);
+
+
+--
 -- Name: answers id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -202,6 +241,14 @@ ALTER TABLE ONLY public.questions ALTER COLUMN id SET DEFAULT nextval('public.qu
 --
 
 ALTER TABLE ONLY public.respondents ALTER COLUMN id SET DEFAULT nextval('public.respondents_id_seq'::regclass);
+
+
+--
+-- Name: answered_options answered_options_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.answered_options
+    ADD CONSTRAINT answered_options_pkey PRIMARY KEY (id);
 
 
 --
